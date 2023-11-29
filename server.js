@@ -3,10 +3,10 @@ const express = require('express')
 const session = require('express-session')
 const exphbs = require('express-handlebars')
 const routes = require('./controllers')
-const helpers = require('/utils/helpers')
+const helpers = require('./util/helpers')
 
 const sequelize = require('./config/connection')
-const SequelizeStore = require('connect-session-sequelize')(sessions.Store)
+const SequelizeStore = require('connect-seesion-sequelize')(session.Store)
 
 const app = express()
 const PORT = process.env.PORT || 3001
@@ -14,28 +14,28 @@ const PORT = process.env.PORT || 3001
 const hbs = exphbs.create({helpers})
 
 const sess = {
-	secret: 'pinkguy',
+	secret: 'lmao',
 	cookie: {
-		maxAge: 3000,
+		maxAge: 300000,
 		httpOnly: true,
 		secure: false,
-		sameSite: 'strict'
+		sameSite: 'strict',
 	},
 	resave: false,
-	saveUninitiallized: true,
+	saveUninitialized: true,
 	store: new SequelizeStore({
 		db: sequelize
 	})
 }
 
 app.use(express.json())
-app.use(express.urlencoded({extended:true})
+app.use(express.urlencoded({extended: true})
 app.use(express.static(path.join(__dirname, 'public')))
 
 app.use(session(sess))
 
 app.use(routes)
 
-sequelize.sync({force: false}).then(()=> {
-	app.listen(PORT,() => console.log('Now listening')
+sequelize.sync({force:false}).then(() => {
+	app.listen(PORT, () => console.log(`Now listening on ${PORT}`))
 })
