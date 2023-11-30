@@ -42,6 +42,11 @@
             background-color: var(--button-color);
             border: .5em solid var(--button-color);
             border-radius: 15px;
+            text-decoration: none;
+        }
+        .navbar ul li a {
+            text-decoration: none !important;
+            color: inherit;
         }
         .navbar ul li:hover {
             background-color: var(--button-hover);
@@ -58,19 +63,40 @@
             background-color: var(--bg);
             margin-top: 1.5em;
         }
+        .login-block {
+            font-family: "TF2secondary";
+            color: var(--text);
+        }
+        .login-block input {
+            display: flex;
+            width: 30%;
+        }
+        .login-block h3 {
+            display: flex;
+            width: 15%;
+            justify-content: center;
+            background-color:var(--button-color);
+            border: .5em solid var(--button-color);
+            border-radius: 15px;
+            font-family:"TF2build";
+        }
+        .login-block h3:hover {
+            background-color:var(--button-hover);
+            border: .5em solid var(--button-hover);
+        }
         .hidden {
             display: none;
         }
     </style>
     <div class="navbar">
-        <ul>
-            <li>Home</li>
-            <li>Dashboard</li>
-            <li>Login</li>
-        </ul>
         <h1>
             I use Arch btw
         </h1>
+        <ul>
+            <li><a href='/'>Home</a></li>
+            <li><a href='/dashboard'>Dashboard</a></li>
+            <li><a href= '/login'>Login</a></li>
+        </ul>
     </div>
     {{{body}}}
 </body>

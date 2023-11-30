@@ -5,6 +5,7 @@ const exphbs = require('express-handlebars')
 const hbs = exphbs.create({})
 const session = require('express-session')
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
+const controllers = require('./controllers')
 
 //create express app
 const app = express()
@@ -25,7 +26,9 @@ app.use(session({
 	resave: false,
 	cookie: cookie
 }))
-
+//allow app to parse json
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
 //set app to use handlebars
 app.engine('handlebars', hbs.engine)
 app.set('view engine', 'handlebars')
@@ -34,9 +37,7 @@ app.set('views', './views')
 //set app to use public static files
 app.use(express.static('public'))
 
-app.get('/', (req, res) => {
-	res.render('home')
-})
+app.use(controllers)
 
 sequelize.sync( {force: false }).then(() => {
 	app.listen(3001, () => {

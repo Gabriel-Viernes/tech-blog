@@ -15,11 +15,10 @@ Post.init(
             type: DataTypes.STRING,
             primaryKey: true,
             allowNull: false,
-            autoIncrement: true
         },
         user_id: {
             type: DataTypes.INTEGER,
-            refernces: {
+            references: {
                 model: 'user',
                 key: 'id'
             }
