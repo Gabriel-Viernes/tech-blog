@@ -26,7 +26,9 @@ app.use(session({
 	resave: false,
 	cookie: cookie
 }))
-
+//allow app to parse json
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
 //set app to use handlebars
 app.engine('handlebars', hbs.engine)
 app.set('view engine', 'handlebars')

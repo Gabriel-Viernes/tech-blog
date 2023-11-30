@@ -43,22 +43,11 @@ router.post('/login',  async (req, res) => {
     }
 })
 
-router.post('/signup', async (req, res) => {
-    try {
-        let existingUser = await User.findOne({
-            where: {
-                username: req.body.username
-            }
-        })
-        if(!existingUser) {
-            User.create({
-                username:req.body.username,
-                password:req.body.password
-            })
-        }
-
-    } catch (err) {
-        res.status(500).json(err)
-    }
+router.post('/signup', (req, res) => {
+    User.create(req.body).then((user) => {
+        res.status(200).json(user)
+    }).catch((err) => {
+        res.status(400).json(err)
+    })
 })
 module.exports = router
