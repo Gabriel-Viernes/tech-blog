@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+    <style>
+        @font-face {
+            font-family: TF2;
+            src: url(/fonts/TF2.ttf)
+        }
+        @font-face {
+            font-family: TF2secondary;
+            src: url(/fonts/TF2secondary.ttf)
+        }
+        @font-face {
+            font-family: TF2build;
+            src: url(/fonts/TF2build.ttf)
+        }
+        :root {
+            --bg: #37342f;
+            --text: #ede5d0;
+            --button-color: #776b5f;
+            --button-hover: #934739;
+        }
+        body {
+            margin:0px;
+            background-color: var(--bg);
+        }
+        .navbar ul {
+            display:inline;
+            list-style:none;
+            padding-inline-start: 2em;
+            margin-top:.5em;
+        }
+        .navbar ul li {
+            display:inline;
+            font-size: 2em;
+            margin-left: .5em;
+            margin-right: .5em;
+            font-family: "TF2build";
+            background-color: var(--button-color);
+            border: .5em solid var(--button-color);
+            border-radius: 15px;
+        }
+        .navbar ul li:hover {
+            background-color: var(--button-hover);
+            border: .5em solid var(--button-hover);
+        }
+        .navbar h1 {
+            margin-left: 1em;
+            font-size: 4em;
+            margin-top: .5em;
+            font-family: "TF2";
+        }
+        .navbar {
+            color: var(--text);
+            background-color: var(--bg);
+            margin-top: 1.5em;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+    <div class="navbar">
+        <ul>
+            <li>Home</li>
+            <li>Dashboard</li>
+            <li>Login</li>
+        </ul>
+        <h1>
+            I use Arch btw
+        </h1>
+    </div>
+    {{{body}}}
+</body>
+</html>

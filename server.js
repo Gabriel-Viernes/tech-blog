@@ -1,41 +1,45 @@
+const express =  require('express')
 const path = require('path')
-const express = require('express')
-const session = require('express-session')
+const sequelize = require('./config/connection.js')
 const exphbs = require('express-handlebars')
-const routes = require('./controllers')
-const helpers = require('./utils/helpers')
+const hbs = exphbs.create({})
+const session = require('express-session')
+const SequelizeStore = require('connect-session-sequelize')(session.Store);
 
-const sequelize = require('./config/connection')
-const SequelizeStore = require('connect-session-sequelize')(session.Store)
-
+//create express app
 const app = express()
-const PORT = process.env.PORT || 3001
 
-const hbs = exphbs.create({helpers})
-
-const sess = {
-	secret: 'lmao',
-	cookie: {
-		maxAge: 300000,
-		httpOnly: true,
-		secure: false,
-		sameSite: 'strict',
-	},
-	resave: false,
-	saveUninitialized: true,
-	store: new SequelizeStore({
-		db: sequelize
-	})
+//define session and have express app use it
+const newStore = new SequelizeStore({
+		db: sequelize,
+})
+const cookie = {
+	maxAge:300000,
+	httpOnly:true,
+	secure:false,
+	sameSite:'strict'
 }
+app.use(session({
+	secret: 'iusearchbtw',
+	store: newStore,
+	resave: false,
+	cookie: cookie
+}))
 
-app.use(express.json())
-app.use(express.urlencoded({extended: true})
-app.use(express.static(path.join(__dirname, 'public')))
+//set app to use handlebars
+app.engine('handlebars', hbs.engine)
+app.set('view engine', 'handlebars')
+app.set('views', './views')
 
-app.use(session(sess))
+//set app to use public static files
+app.use(express.static('public'))
 
-app.use(routes)
+app.get('/', (req, res) => {
+	res.render('home')
+})
 
-sequelize.sync({force:false}).then(() => {
-	app.listen(PORT, () => console.log(`Now listening on ${PORT}`))
+sequelize.sync( {force: false }).then(() => {
+	app.listen(3001, () => {
+		console.log('listening on 3001')
+	})
 })
