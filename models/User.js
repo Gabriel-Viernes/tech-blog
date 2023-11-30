@@ -2,7 +2,7 @@ const { Model, DataTypes} = require('sequelize')
 const sequelize = require('../config/connection')
 
 class User extends Model{}
-T
+
 User.init(
     {
         id: {
