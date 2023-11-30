@@ -1,6 +1,6 @@
 const router = require('express').Router()
 const checkAuth = require('../utils/auth')
-const User = require('../models/User')
+const { User, Post, Comment } = require('../models')
 router.get('/', (req, res) => {
 	try {
         res.render('home')
@@ -17,15 +17,37 @@ router.get('/login', (req, res) => {
     }
 })
 
-router.get('/dashboard', checkAuth, (req, res) => {
+router.get('/dashboard', checkAuth, async (req, res) => {
     try {
-        res.render('dashboard')
+        const userData = await User.findByPk(req.session.user_id, {
+            attributes: {
+                exclude: ['password'],
+            },
+            include:[
+                {
+                    model: Post
+                },
+                {
+                    model: Comment
+                }
+            ]
+        })
+
+        const user = userData.get({ plain: true })
+
+        res.render('dashboard', {
+            ...user,
+            logged_in:true
+        })
     } catch(err) {
+        console.log(err)
         res.status(500).json(err)
+
     }
 })
 
 router.post('/login',  async (req, res) => {
+    console.log(req.session)
     try {
         const userData = await User.findOne({
             where: {
@@ -33,8 +55,13 @@ router.post('/login',  async (req, res) => {
                 password: req.body.password
             }
         })
+       
         if(userData) {
-            res.render('dashboard')
+            req.session.save(() => {
+                req.session.user_id = userData.id;
+                req.session.logged_in = true;
+                res.json({message: "You are now logged in"})
+            })
         } else {
             res.status(404).json({'message':'User not found'})
         }
@@ -50,4 +77,5 @@ router.post('/signup', (req, res) => {
         res.status(400).json(err)
     })
 })
+
 module.exports = router
