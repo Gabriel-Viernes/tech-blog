@@ -1,9 +1,22 @@
 const router = require('express').Router()
 const checkAuth = require('../utils/auth')
 const { User, Post, Comment } = require('../models')
-router.get('/', (req, res) => {
+router.get('/', async (req, res) => {
 	try {
-        res.render('home')
+        const posts = await Post.findAll({
+                include: [
+                    {
+                        model: User,
+                        attributes: ['username']
+                    }
+                ]
+            })
+        const postsMap = posts.map((post) => post.get({ plain: true }))
+        console.log(postsMap)
+        res.render('home', {
+            postsMap,
+            logged_in: req.session.logged_in
+        })
     } catch(err) {
         res.status(500).json(err)
     }
