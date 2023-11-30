@@ -5,6 +5,7 @@ const exphbs = require('express-handlebars')
 const hbs = exphbs.create({})
 const session = require('express-session')
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
+const controllers = require('./controllers')
 
 //create express app
 const app = express()
@@ -34,9 +35,7 @@ app.set('views', './views')
 //set app to use public static files
 app.use(express.static('public'))
 
-app.get('/', (req, res) => {
-	res.render('home')
-})
+app.use(controllers)
 
 sequelize.sync( {force: false }).then(() => {
 	app.listen(3001, () => {

@@ -42,6 +42,11 @@
             background-color: var(--button-color);
             border: .5em solid var(--button-color);
             border-radius: 15px;
+            text-decoration: none;
+        }
+        .navbar ul li a {
+            text-decoration: none !important;
+            color: inherit;
         }
         .navbar ul li:hover {
             background-color: var(--button-hover);
@@ -63,14 +68,14 @@
         }
     </style>
     <div class="navbar">
-        <ul>
-            <li>Home</li>
-            <li>Dashboard</li>
-            <li>Login</li>
-        </ul>
         <h1>
             I use Arch btw
         </h1>
+        <ul>
+            <li><a href='/'>Home</a></li>
+            <li><a href='/dashbar'>Dashbar</a></li>
+            <li><a href= '/login'>Login</a></li>
+        </ul>
     </div>
     {{{body}}}
 </body>
