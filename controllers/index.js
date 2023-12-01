@@ -2,6 +2,7 @@ const router = require('express').Router()
 const checkAuth = require('../utils/auth')
 const { User, Post, Comment } = require('../models')
 
+
 //home route
 router.get('/', async (req, res) => {
 	try {
@@ -145,6 +146,34 @@ router.post('/newPost', checkAuth, async (req,res) => {
 
         res.status(200).json(newPost)
     } catch(err) {
+        res.status(500).json(err)
+    }
+})
+
+//existing post get route
+router.get('/posts/:id', checkAuth, async (req, res) => {
+    try {
+        const post = await Post.findOne({
+            where: {
+                id: req.params.id
+            },include: [
+                {
+                    model: User,
+                    attributes: ['username']
+                },
+                {
+                    model: Comment,
+                    attributes: ['text']
+                }
+            ]
+        })
+        const postPlain = post.get({ plain: true })
+        console.log(`comment two ${postPlain}`)
+        res.render('commentEnv', {
+            ...postPlain,
+            logged_in:true
+        })
+    } catch (err) {
         res.status(500).json(err)
     }
 })
