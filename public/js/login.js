@@ -1,4 +1,3 @@
-console.log('login.js loaded')
 async function loginFormHandler(event) {
     event.preventDefault()
     var username = document.querySelector('#login-user').value.trim()
@@ -10,9 +9,8 @@ async function loginFormHandler(event) {
             body: JSON.stringify({ username, password }),
             headers: { 'Content-Type': 'application/json'}
         })
-        await console.log(response)
         if(response.ok) {
-            document.location.replace('/dashboard');
+            alert('Login successful')
         } else {
             alert(response.statusText)
         }
