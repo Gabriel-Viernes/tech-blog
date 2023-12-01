@@ -127,7 +127,7 @@
             <li><a href='/'>Home</a></li>
             <li><a href='/dashboard'>Dashboard</a></li>
             {{#if logged_in}}
-            <li><a href= '/logout'>Logout</a></li>
+            <li id="logoutBtn">Logout</li>
             <li><a href= '/newPost'>New Post</a></li>
             {{else}}
             <li><a href= '/login'>Login</a></li>
@@ -135,5 +135,6 @@
         </ul>
     </div>
     {{{body}}}
+    <script src="/js/logout.js"></script>
 </body>
 </html>
