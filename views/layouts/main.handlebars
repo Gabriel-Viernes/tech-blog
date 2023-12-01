@@ -88,7 +88,8 @@
             display: none;
         }
         .post {
-            border: .5em solid var(--button-color)
+            border: .5em solid var(--button-color);
+            margin: .5em;
         }
         .post h3 {
             font-family: "TF2build";
@@ -99,6 +100,24 @@
             font-family:"TF2";
             padding-left:.5em;
         }
+        .new-post {
+            font-family:"TF2secondary";
+            display:flex;           
+            flex-direction: column;
+            margin: .5em;
+        }
+        .new-post h3 {
+            background-color: var(--button-color);
+            border: .5em solid var(--button-color);
+            width:20%;
+            border-radius: 15px;
+            font-size: 2em;
+            text-align: center;
+        }
+        .new-post h3:hover {
+            background-color: var(--button-hover);
+            border: .5em solid var(--button-hover);
+        }
     </style>
     <div class="navbar">
         <h1>
@@ -107,7 +126,12 @@
         <ul>
             <li><a href='/'>Home</a></li>
             <li><a href='/dashboard'>Dashboard</a></li>
+            {{#if logged_in}}
+            <li><a href= '/logout'>Logout</a></li>
+            <li><a href= '/newPost'>New Post</a></li>
+            {{else}}
             <li><a href= '/login'>Login</a></li>
+            {{/if}}
         </ul>
     </div>
     {{{body}}}
